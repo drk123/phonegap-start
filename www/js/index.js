@@ -42,9 +42,13 @@ var app = {
         tx.executeSql('CREATE TABLE IF NOT EXISTS DEMO (id unique, data)');
         tx.executeSql('INSERT INTO DEMO (id, data) VALUES (new Date().getMilliseconds(), "First row")');
         //tx.executeSql('INSERT INTO DEMO (id, data) VALUES (2, "Second row")');
-        tx.executeSql('SELECT * FROM DEMO', [], app.querySuccess, app.errorCB);
    },
 
+   runQuery: function(tx)
+   {
+	  alert("Running query");   
+      tx.executeSql('SELECT * FROM DEMO', [], app.querySuccess, app.errorCB);
+   },
    querySuccess: function(tx, results)
    {
 	   alert("Returned rows = " + results.rows.length);
@@ -55,6 +59,8 @@ var app = {
 
    successCB: function () {
        alert("success!");
+       var db = window.openDatabase("Database", "1.0", "Cordova Demo", 200000);
+       db.transaction(app.queryDB, app.errorCB);      
    },
 
     
