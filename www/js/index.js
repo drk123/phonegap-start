@@ -27,7 +27,30 @@ var app = {
         // This is an event handler function, which means the scope is the event.
         // So, we must explicitly called `app.report()` instead of `this.report()`.
         app.report('deviceready');
+        
+        alert('does this popup?');
+        var db = window.openDatabase("Database", "1.0", "Cordova Demo", 200000);
+        db.transaction(this.populateDB, this.errorCB, this.successCB);    
+        
     },
+    
+    
+    populateDB : function (tx) {
+        tx.executeSql('DROP TABLE IF EXISTS DEMO');
+        tx.executeSql('CREATE TABLE IF NOT EXISTS DEMO (id unique, data)');
+        tx.executeSql('INSERT INTO DEMO (id, data) VALUES (1, "First row")');
+        tx.executeSql('INSERT INTO DEMO (id, data) VALUES (2, "Second row")');
+   },
+
+   errorCB: function (err) {
+       alert("Error processing SQL: "+err);
+   },
+
+   successCB: function () {
+       alert("success!");
+   },
+
+    
     report: function(id) {
         // Report the event in the console
         console.log("Report: " + id);
