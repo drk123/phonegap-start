@@ -30,7 +30,10 @@ var app = {
         
         alert('does this popup?');
         var db = window.openDatabase("Database", "1.0", "Cordova Demo", 200000);
-        db.transaction(this.populateDB, this.errorCB, this.successCB);    
+        alert('db is not null? ' + (db !== null));
+
+        db.transaction(app.populateDB, app.errorCB, app.successCB);
+        alert('done with transaction');
         
     },
     
