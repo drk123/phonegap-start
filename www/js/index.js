@@ -39,12 +39,16 @@ var app = {
     
     
     populateDB : function (tx) {
-        tx.executeSql('DROP TABLE IF EXISTS DEMO');
         tx.executeSql('CREATE TABLE IF NOT EXISTS DEMO (id unique, data)');
-        tx.executeSql('INSERT INTO DEMO (id, data) VALUES (1, "First row")');
-        tx.executeSql('INSERT INTO DEMO (id, data) VALUES (2, "Second row")');
+        tx.executeSql('INSERT INTO DEMO (id, data) VALUES (new Date().getMilliseconds(), "First row")');
+        //tx.executeSql('INSERT INTO DEMO (id, data) VALUES (2, "Second row")');
+        tx.executeSql('SELECT * FROM DEMO', [], app.querySuccess, app.errorCB);
    },
 
+   querySuccess: function(tx, results)
+   {
+	   alert("Returned rows = " + results.rows.length);
+   },
    errorCB: function (err) {
        alert("Error processing SQL: "+err);
    },
